@@ -1,0 +1,55 @@
+﻿<Window x:Class="RuDict.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="RuDict 1.0" Height="220" Width="300"
+        WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="False"
+        Background="White"
+        WindowStyle="ToolWindow"
+        ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Image Name="imgKey" Grid.Column="0" Grid.Row="0"
+         Margin="10" Source="images/dictionary.png" VerticalAlignment="Top">
+            <Image.Effect>
+                <DropShadowEffect Color="Gray"
+                        Opacity=".50"
+                        ShadowDepth="8" />
+            </Image.Effect>
+        </Image>
+
+        <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center">
+            <Label FontWeight="Bold">RuDict v. 1.0</Label>
+            <Label>Copyright © Piotr Ludwiczuk  2012</Label>
+
+            <Button Margin="5" Content="www.piotrludwiczuk.net" Cursor="Hand" Click="Button_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <TextBlock TextDecorations="Underline">
+                <ContentPresenter />
+                        </TextBlock>
+                    </ControlTemplate>
+                </Button.Template>
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Foreground" Value="Blue" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Foreground" Value="Red" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+        </StackPanel>
+    </Grid>
+</Window>
