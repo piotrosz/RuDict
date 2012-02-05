@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -29,7 +30,7 @@ namespace RuDict
 {
     public partial class MainWindow : Window
     {
-        private IHistoryManager m = new RavenHistoryManager();
+        private IHistoryManager historyManager = new RavenHistoryManager();
         private IDownloader googleDownloader = new GoogleDownloader();
         private IDownloader gramotaDownloader = new GramotaDownloader();
         private IDownloader babelPointDownloader = new BabelPointDownloader();
@@ -48,7 +49,16 @@ namespace RuDict
 
             e.Handled = true;
             string word = TextBoxWord.Text;
+            
+            DownloadAllDefinitions(word);
+            
+            historyManager.Add(word);
+            PopulateListBox();
+            TextBoxWord.Text = "";
+        }
 
+        private void DownloadAllDefinitions(string word)
+        {
             gramotaDownloader.DownloadAsync(
                 client_DownloadGramotaProgressChanged,
                 client_DownloadGramotaCompleted, word);
@@ -60,10 +70,6 @@ namespace RuDict
             babelPointDownloader.DownloadAsync(
                  client_DownloadBabelPointProgressChanged,
                 client_DownloadBabelPointCompleted, word);
-
-            m.Add(word);
-            PopulateListBox();
-            TextBoxWord.Text = "";
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -155,7 +161,7 @@ namespace RuDict
         {
             ListBoxHistory.Items.Clear();
 
-            foreach (var item in m.GetAll())
+            foreach (var item in historyManager.GetAll())
                 ListBoxHistory.Items.Add(item.Word.ToString());
         }
 
@@ -166,22 +172,11 @@ namespace RuDict
             if (selected != null)
             {
                 string word = selected.ToString();
-
-                gramotaDownloader.DownloadAsync(
-                    client_DownloadGramotaProgressChanged,
-                    client_DownloadGramotaCompleted, word);
-
-                googleDownloader.DownloadAsync(
-                    client_DownloadGoogleProgressChanged,
-                    client_DownloadGoogleCompleted, word);
-
-                babelPointDownloader.DownloadAsync(
-                    client_DownloadBabelPointProgressChanged,
-                    client_DownloadBabelPointCompleted, word);
+                DownloadAllDefinitions(word);
             }
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Window_Closing(object sender, CancelEventArgs e)
         {
             Properties.Settings.Default.Save();
         }
@@ -198,7 +193,7 @@ namespace RuDict
             if (dlg.ShowDialog() == true)
             {
                 string filename = dlg.FileName;
-                new HtmlExporter().Export(m.GetAll(), filename);
+                new HtmlExporter().Export(historyManager.GetAll(), filename);
             }
         }
 
@@ -213,7 +208,7 @@ namespace RuDict
             if (dlg.ShowDialog() == true)
             {
                 string filename = dlg.FileName;
-                new XmlExporter().Export(m.GetAll(), filename);
+                new XmlExporter().Export(historyManager.GetAll(), filename);
             }
         }
 
@@ -228,7 +223,7 @@ namespace RuDict
             if (dlg.ShowDialog() == true)
             {
                 string filename = dlg.FileName;
-                new CsvExporter().Export(m.GetAll(), filename);
+                new CsvExporter().Export(historyManager.GetAll(), filename);
             }
         }
         #endregion
@@ -258,14 +253,14 @@ namespace RuDict
                 items.Add(item.ToString());
 
             if (items.Count > 0)
-                m.RemoveMany(items);
+                historyManager.RemoveMany(items);
 
             PopulateListBox();
         }
 
         private void MenuItem_Click_RemoveAll(object sender, RoutedEventArgs e)
         {
-            m.RemoveAll();
+            historyManager.RemoveAll();
             PopulateListBox();
         }
 

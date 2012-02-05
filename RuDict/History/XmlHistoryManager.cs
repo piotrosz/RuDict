@@ -10,6 +10,9 @@ using RuDict.Interfaces;
 
 namespace RuDict.History
 {
+    /// <summary>
+    /// This class is currently not used
+    /// </summary>
     public class XmlHistoryManager : IHistoryManager
     {
         public XmlHistoryManager()

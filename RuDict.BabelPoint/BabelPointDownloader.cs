@@ -12,8 +12,6 @@ namespace RuDict.BabelPoint
 {
     public class BabelPointDownloader : IDownloader
     {
-        CookieContainer cookies = new CookieContainer();
-
         public void DownloadAsync(
             DownloadProgressChangedEventHandler downloadProgressChangedHandler, 
             DownloadStringCompletedEventHandler downloadCompetedHandler, 
@@ -24,13 +22,7 @@ namespace RuDict.BabelPoint
             using (var client = new WebClient())
             {
                 client.Encoding = Encoding.UTF8;
-                //client.Headers.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-                //client.Headers.Add("Accept-Encoding", "gzip, deflate");
-                //client.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:9.0.1) Gecko/20100101 Firefox/9.0.1");
-                //client.Headers.Add("Accept-Charset", "ISO-8859-2,utf-8;q=0.7,*;q=0.7");
-                //client.Headers.Add("Content-Type", "text/html; charset=UTF-8");
-                //client.CachePolicy = new RequestCachePolicy(RequestCacheLevel.Default);
-
+                
                 client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(downloadProgressChangedHandler);
                 client.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloadCompetedHandler);
                 client.DownloadStringAsync(new Uri(url));
