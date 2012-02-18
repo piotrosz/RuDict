@@ -79,7 +79,7 @@ namespace RuDict
         }
 
         #region Async handlers
-        private void handleCompleted(WebBrowser browser, ProgressBar progress,
+        private void handleCompleted(WebBrowser browser, /*ProgressBar progress,*/
             object sender, DownloadStringCompletedEventArgs e, IScrapper scrapper)
         {
             if (e.Error != null)
@@ -97,7 +97,7 @@ namespace RuDict
                     var searchResults = scrapper.Scrape(e.Result);
 
                     browser.NavigateToString(GetHtml(searchResults));
-                    progress.Value = 0;
+                    //progress.Value = 0;
 
                 }
             }
@@ -109,32 +109,32 @@ namespace RuDict
 
         public void client_DownloadGramotaCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
-            handleCompleted(WebBrowserGramota, ProgressBarGramota, sender, e,gramotaScrapper);
+            handleCompleted(WebBrowserGramota, /*ProgressBarGramota,*/ sender, e,gramotaScrapper);
         }
 
         public void client_DownloadGoogleCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
-            handleCompleted(WebBrowserGoogle, ProgressBarGoogle, sender, e, googleScrapper);
+            handleCompleted(WebBrowserGoogle, /*ProgressBarGoogle,*/ sender, e, googleScrapper);
         }
 
         public void client_DownloadBabelPointCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
-            handleCompleted(WebBrowserBabelPoint, ProgressBarBabelPoint, sender, e, babelPointScrapper);
+            handleCompleted(WebBrowserBabelPoint/*, ProgressBarBabelPoint*/, sender, e, babelPointScrapper);
         }
 
         public void client_DownloadGramotaProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
-            handleProgressChanged(sender, e, ProgressBarGramota);
+            //handleProgressChanged(sender, e, ProgressBarGramota);
         }
 
         public void client_DownloadGoogleProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
-            handleProgressChanged(sender, e, ProgressBarGoogle);
+            //handleProgressChanged(sender, e, ProgressBarGoogle);
         }
 
         public void client_DownloadBabelPointProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
-            handleProgressChanged(sender, e, ProgressBarBabelPoint);
+            //handleProgressChanged(sender, e, ProgressBarBabelPoint);
         }
         #endregion
 

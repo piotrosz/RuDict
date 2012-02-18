@@ -83,6 +83,7 @@ namespace RuDict.History
             using (var session = DocumentStore.OpenSession())
             {
                 result = session.Query<HistoryEntry>()
+                    .Take(1000)
                     .OrderByDescending(x => x.Date)
                     .ToList();
             }
