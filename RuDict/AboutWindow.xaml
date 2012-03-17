@@ -27,8 +27,8 @@
         </Image>
 
         <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center">
-            <Label FontWeight="Bold">RuDict v. 1.0</Label>
-            <Label>Copyright © Piotr Ludwiczuk  2012</Label>
+            <Label FontWeight="Bold">RuDict v. 1.2</Label>
+            <Label>Copyright © Piotr Ludwiczuk 2012</Label>
 
             <Button Margin="5" Content="www.piotrludwiczuk.net" Cursor="Hand" Click="Button_Click">
                 <Button.Template>

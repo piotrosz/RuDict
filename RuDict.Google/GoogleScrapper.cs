@@ -25,6 +25,10 @@ namespace RuDict.Google
                 .Replace(",200,null)", "");
 
             List<SearchResult> search = new List<SearchResult>();
+
+            if (contents.Contains("Invalid query"))
+                return search;
+
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Result));
 
             using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonText)))

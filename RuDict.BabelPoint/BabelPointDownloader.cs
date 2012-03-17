@@ -13,7 +13,6 @@ namespace RuDict.BabelPoint
     public class BabelPointDownloader : IDownloader
     {
         public void DownloadAsync(
-            DownloadProgressChangedEventHandler downloadProgressChangedHandler, 
             DownloadStringCompletedEventHandler downloadCompetedHandler, 
             string word)
         {
@@ -23,7 +22,6 @@ namespace RuDict.BabelPoint
             {
                 client.Encoding = Encoding.UTF8;
                 
-                client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(downloadProgressChangedHandler);
                 client.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloadCompetedHandler);
                 client.DownloadStringAsync(new Uri(url));
             }

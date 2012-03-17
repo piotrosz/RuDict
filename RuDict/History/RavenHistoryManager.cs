@@ -43,10 +43,16 @@ namespace RuDict.History
 
         public void Add(string entry)
         {
+            if (string.IsNullOrWhiteSpace(entry))
+                return;
+
             using (var session = DocumentStore.OpenSession())
             {
-                session.Store(new HistoryEntry { Date = DateTime.Now, Word = entry });
-                session.SaveChanges();
+                if (session.Query<HistoryEntry>().SingleOrDefault(x => x.Word == entry) == null)
+                {
+                    session.Store(new HistoryEntry { Date = DateTime.Now, Word = entry });
+                    session.SaveChanges();
+                }
             }
         }
 
@@ -65,7 +71,7 @@ namespace RuDict.History
             {
                 foreach (var item in entries)
                 {
-                    var toDelete = session.Query<HistoryEntry>().SingleOrDefault(x => x.Word == item);
+                    var toDelete = session.Query<HistoryEntry>().FirstOrDefault(x => x.Word == item);
                     if(toDelete != null)
                     {
                         session.Delete<HistoryEntry>(toDelete);

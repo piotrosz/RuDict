@@ -2,8 +2,9 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="RuDict.MainWindow"
-          xmlns:self="clr-namespace:RuDict"  
-    Title="RuDict" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" 
+        xmlns:self="clr-namespace:RuDict" 
+        xmlns:l="clr-namespace:RuDict.Controls;assembly=RuDict.Controls"
+    Title="RuDict 1.2" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" 
         Height="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ApplicationHeight, Mode=TwoWay}"
         Width="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ApplicationWidth, Mode=TwoWay}"
         Top ="{Binding Source={x:Static self:Properties.Settings.Default}, Path=ApplicationTop, Mode=TwoWay}"
@@ -20,7 +21,6 @@
             <RowDefinition Height="20"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition></RowDefinition>
-            <!--<RowDefinition Height="10"></RowDefinition>-->
         </Grid.RowDefinitions>
 
         <Menu IsMainMenu="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalContentAlignment="Left">
@@ -65,8 +65,10 @@
             </MenuItem>
         </Menu>
 
-        <TextBox x:Name="TextBoxWord" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TextWrapping="Wrap" KeyUp="TextBox_KeyUp"
-                 Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" FontSize="16" />
+        <l:SearchTextBox x:Name="TextBoxWord" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TextWrapping="Wrap" KeyUp="TextBox_KeyUp"
+                 Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" FontSize="16" Padding="2" OverridesDefaultStyle="False" SelectionBrush="#FF3E60AD" 
+                 AutoWordSelection="True" SearchMode="Delayed" Search="TextBoxWord_Search"
+                         LabelText="Type Russian word..." LabelTextColor="LightGray"/>
 
         <ListBox x:Name="ListBoxHistory" Grid.Column="0" Grid.Row="2" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" BorderThickness="1" 
                  SelectionChanged="ListBoxHistory_SelectionChanged"
@@ -86,14 +88,6 @@
                 <WebBrowser x:Name="WebBrowserBabelPoint" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </TabItem>
         </TabControl>
-
-        <!--<WrapPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="3">
-            <ProgressBar x:Name="ProgressBarGramota" Height="10" Width="150" />
-            <ProgressBar x:Name="ProgressBarGoogle" Height="10" Width="150"/>
-            <ProgressBar x:Name="ProgressBarBabelPoint" Height="10" Width="150" />
-        </WrapPanel>-->
-        
+    
     </Grid>
-
-
 </Window>

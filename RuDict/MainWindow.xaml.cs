@@ -48,10 +48,24 @@ namespace RuDict
             if (e.Key != System.Windows.Input.Key.Enter) return;
 
             e.Handled = true;
+            
+            Search();
+        }
+
+        private void TextBoxWord_Search(object sender, RoutedEventArgs e)
+        {
+            Search();
+        }
+
+        private void Search()
+        {
             string word = TextBoxWord.Text;
-            
+
+            if (string.IsNullOrWhiteSpace(word))
+                return;
+
             DownloadAllDefinitions(word);
-            
+
             historyManager.Add(word);
             PopulateListBox();
             TextBoxWord.Text = "";
@@ -60,15 +74,12 @@ namespace RuDict
         private void DownloadAllDefinitions(string word)
         {
             gramotaDownloader.DownloadAsync(
-                client_DownloadGramotaProgressChanged,
                 client_DownloadGramotaCompleted, word);
 
             googleDownloader.DownloadAsync(
-                client_DownloadGoogleProgressChanged,
                 client_DownloadGoogleCompleted, word);
 
             babelPointDownloader.DownloadAsync(
-                 client_DownloadBabelPointProgressChanged,
                 client_DownloadBabelPointCompleted, word);
         }
 
@@ -97,8 +108,6 @@ namespace RuDict
                     var searchResults = scrapper.Scrape(e.Result);
 
                     browser.NavigateToString(GetHtml(searchResults));
-                    //progress.Value = 0;
-
                 }
             }
         }
@@ -109,32 +118,17 @@ namespace RuDict
 
         public void client_DownloadGramotaCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
-            handleCompleted(WebBrowserGramota, /*ProgressBarGramota,*/ sender, e,gramotaScrapper);
+            handleCompleted(WebBrowserGramota, sender, e, gramotaScrapper);
         }
 
         public void client_DownloadGoogleCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
-            handleCompleted(WebBrowserGoogle, /*ProgressBarGoogle,*/ sender, e, googleScrapper);
+            handleCompleted(WebBrowserGoogle, sender, e, googleScrapper);
         }
 
         public void client_DownloadBabelPointCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
-            handleCompleted(WebBrowserBabelPoint/*, ProgressBarBabelPoint*/, sender, e, babelPointScrapper);
-        }
-
-        public void client_DownloadGramotaProgressChanged(object sender, DownloadProgressChangedEventArgs e)
-        {
-            //handleProgressChanged(sender, e, ProgressBarGramota);
-        }
-
-        public void client_DownloadGoogleProgressChanged(object sender, DownloadProgressChangedEventArgs e)
-        {
-            //handleProgressChanged(sender, e, ProgressBarGoogle);
-        }
-
-        public void client_DownloadBabelPointProgressChanged(object sender, DownloadProgressChangedEventArgs e)
-        {
-            //handleProgressChanged(sender, e, ProgressBarBabelPoint);
+            handleCompleted(WebBrowserBabelPoint, sender, e, babelPointScrapper);
         }
         #endregion
 
@@ -172,6 +166,7 @@ namespace RuDict
             if (selected != null)
             {
                 string word = selected.ToString();
+                TextBoxWord.Text = word;
                 DownloadAllDefinitions(word);
             }
         }
@@ -276,5 +271,7 @@ namespace RuDict
             Application.Current.Shutdown();
         }
         #endregion
+
+        
     }
 }

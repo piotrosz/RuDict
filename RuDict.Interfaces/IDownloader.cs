@@ -9,7 +9,6 @@ namespace RuDict.Interfaces
     public interface IDownloader
     {
         void DownloadAsync(
-            DownloadProgressChangedEventHandler downloadProgressChangedHandler,
             DownloadStringCompletedEventHandler downloadCompetedHandler, 
             string word);
     }

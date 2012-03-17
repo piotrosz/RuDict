@@ -12,7 +12,6 @@ namespace RuDict.Google
     public class GoogleDownloader : IDownloader
     {
         public void DownloadAsync(
-            DownloadProgressChangedEventHandler downloadProgressChangedHandler, 
             DownloadStringCompletedEventHandler downloadCompetedHandler, 
             string word)
         {
@@ -22,7 +21,6 @@ namespace RuDict.Google
             {
                 client.Encoding = Encoding.UTF8;
 
-                client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(downloadProgressChangedHandler);
                 client.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloadCompetedHandler);
                 client.DownloadStringAsync(new Uri(url));
             }

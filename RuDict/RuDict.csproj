@@ -192,6 +192,10 @@
       <Project>{4307F855-6636-4E70-A456-BDF1BBFE91D0}</Project>
       <Name>RuDict.BabelPoint</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RuDict.Controls\RuDict.Controls.csproj">
+      <Project>{A3082956-9EE4-4B35-9B4E-B07D0C4C8B56}</Project>
+      <Name>RuDict.Controls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RuDict.Google\RuDict.Google.csproj">
       <Project>{607DBCF6-59F2-4DA0-AD35-6B90F76D7DE7}</Project>
       <Name>RuDict.Google</Name>
