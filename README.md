@@ -8,4 +8,4 @@ It is written in .NET 4.0 (C#) using WPF and RavenDb.
 
 ### Screenshot ###
 
-![Gramota tab](http://if.pw.edu.pl/~ludwik/RuDict1.2.png)
+![Gramota tab](http://if.pw.edu.pl/~ludwik/images/RuDict1.2.png)
